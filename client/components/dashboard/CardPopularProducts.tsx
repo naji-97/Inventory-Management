@@ -1,6 +1,6 @@
 import { useGetDashboardMetricsQuery } from "@/store/api";
 import { ShoppingBag } from "lucide-react";
-import React, { useEffect } from "react";
+import React from "react";
 import Rating from "@/components/dashboard/Rating";
 import Image from "next/image";
 import { FadeLoader } from "react-spinners";

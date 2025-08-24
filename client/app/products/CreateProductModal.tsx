@@ -44,14 +44,13 @@ const CreateProductModal = ({
     }, [onClose, isOpen]);
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        console.log(name, value, "name and value");
         
         setFormData({
             ...formData,
             [name]:
                 name === "price" || name === "stockQuantity" || name === "rating"
-                    ? parseFloat(value)
-                    : value,
+                    ?  value === "" ? 0 : parseFloat(value) // ✅ avoid NaN
+        : value,
         });
     };
 
