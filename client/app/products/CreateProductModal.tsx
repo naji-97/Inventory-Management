@@ -14,13 +14,20 @@ type CreateProductModalProps = {
     onClose: () => void;
     onCreate: (formData: ProductFormData) => any;
 };
+type ProductForm = {
+    productId: string;
+    name: string;
+    price: number;
+    stockQuantity: number;
+    rating: number;
+};
 
 const CreateProductModal = ({
     isOpen,
     onClose,
     onCreate,
 }: CreateProductModalProps) => {
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<ProductForm>({
         productId: v4(),
         name: "",
         price: 0,
@@ -44,14 +51,14 @@ const CreateProductModal = ({
     }, [onClose, isOpen]);
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        
-        setFormData({
-            ...formData,
-            [name]:
+
+        setFormData(prev => ({
+            ...prev,
+            [name as keyof ProductForm]:
                 name === "price" || name === "stockQuantity" || name === "rating"
-                    ?  value === "" ? 0 : parseFloat(value) // ✅ avoid NaN
-        : value,
-        });
+                    ? value === "" ? 0 : parseFloat(value)
+                    : value,
+        }));
     };
 
     const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
