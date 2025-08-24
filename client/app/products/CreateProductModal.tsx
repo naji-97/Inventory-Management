@@ -9,11 +9,14 @@ type ProductFormData = {
     rating: number;
 };
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 type CreateProductModalProps = {
     isOpen: boolean;
     onClose: () => void;
     onCreate: (formData: ProductFormData) => any;
 };
+/* eslint-enable @typescript-eslint/no-explicit-any */
+
 type ProductForm = {
     productId: string;
     name: string;

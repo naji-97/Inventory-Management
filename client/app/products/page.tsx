@@ -28,7 +28,6 @@ const Products = () => {
 
   const [createProduct] = useCreateProductMutation();
   const handleCreateProduct = async (productData: ProductFormData) => {
-    console.log(productData);
 
     const response =await createProduct(productData);
     return response
