@@ -80,13 +80,6 @@ const Sidebar = () => {
                 className={`flex gap-3 justify-between md:justify-normal items-center pt-8 ${isSidebarCollapsed ? "px-5" : "px-8"
                     }`}
             >
-                {/* <Image
-                    src="https://s3-inventorymanagement.s3.us-east-2.amazonaws.com/logo.png"
-                    alt="edstock-logo"
-                    width={27}
-                    height={27}
-                    className="rounded w-8"
-                /> */}
                 <LayoutDashboard className="rounded w-8 text-sky-500" />
                 <h1
                     className={`${isSidebarCollapsed ? "hidden" : "block"
