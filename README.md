@@ -6,7 +6,7 @@ A full-stack inventory management dashboard built with Next.js, Redux, Node.js, 
 
 Frontend:
 
-Built with Next.js 14 and Tailwind CSS for a responsive UI.
+Built with Next.js 15 and Tailwind CSS for a responsive UI.
 
 Material UI Data Grid for advanced table handling (sorting, filtering, pagination).
 
