@@ -4,6 +4,8 @@ import { useGetProductsQuery } from "@/store/api";
 import Header from "@/components/header/Header";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { FadeLoader } from "react-spinners";
+import { dataGridClassNames, dataGridSxStyles } from "@/lib/data-grid-style";
+import { useAppSelector } from "@/store/redux";
 
 const columns: GridColDef[] = [
     { field: "productId", headerName: "ID", width: 90 },
@@ -31,11 +33,11 @@ const columns: GridColDef[] = [
 ];
 
 const Inventory = () => {
-    const { data: products, isLoading, isError  } = useGetProductsQuery();
+    const { data: products, isLoading, isError } = useGetProductsQuery();
 
-    
+    const isDarkMode = useAppSelector((state) => state.global.isDarkMode);
 
-    if (isError ) {
+    if (isError) {
         return (
             <div className="text-center text-red-500 py-4">
                 Failed to fetch products
@@ -47,40 +49,44 @@ const Inventory = () => {
         <div className="flex flex-col">
             <Header name="Inventory" />
             {
-                isLoading && (
+                isLoading ? (
                     <div className="flex flex-col items-center justify-center h-[70vh]">
                         <FadeLoader color="#2392e6" height={30}
                             radius={4}
                             width={15}
-                            />
+                        />
                     </div>
-                )
+                ) :
+
+                    !isLoading && products && products?.length === 0 ? (
+                        <div className="text-center text-gray-400 py-4">
+                            No products found
+                        </div>
+                    ) :
+
+                        <DataGrid
+                            rows={products}
+                            columns={columns}
+                            getRowId={(row) => row.productId}
+                            checkboxSelection
+
+                            initialState={
+                                {
+                                    pagination: {
+                                        paginationModel: {
+                                            pageSize: 20,
+                                        },
+                                    },
+                                }
+                            }
+                            pageSizeOptions={[20]}
+                            className={dataGridClassNames}
+                            sx={dataGridSxStyles(isDarkMode)}
+
+                        />
             }
             {
-                !isLoading && products?.length === 0 && (
-                    <div className="text-center text-gray-400 py-4">
-                        No products found
-                    </div>
-                )
             }
-            <DataGrid
-                rows={products}
-                columns={columns}
-                getRowId={(row) => row.productId}
-                checkboxSelection
-                initialState={
-                    {
-                        pagination: {
-                            paginationModel: {
-                                pageSize: 20,
-                            },
-                        },
-                    }
-                }
-                pageSizeOptions={[ 20]}
-                
-                className="bg-white shadow rounded-lg border border-gray-200 mt-5 !text-gray-700"
-            />
         </div>
     );
 };

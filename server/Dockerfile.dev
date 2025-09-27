@@ -1,0 +1,23 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copy package files and install dependencies (including dev deps)
+COPY package*.json ./
+RUN npm install
+
+# Copy Prisma schema and generate client
+COPY prisma ./prisma
+RUN npx prisma generate
+
+# Copy source code
+COPY . .
+
+# Install nodemon for hot reloading
+RUN npm install -g nodemon
+
+# Expose port
+EXPOSE 4000
+
+# Start with nodemon for hot reloading
+CMD ["nodemon", "src/index.ts"]

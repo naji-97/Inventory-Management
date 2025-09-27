@@ -1,0 +1,50 @@
+# version: "3.9"
+
+services:
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      # - ./client:/app
+      - /app/node_modules
+    environment:
+      - NEXT_PUBLIC_API_BASE_URL=http://localhost:4000
+
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./server/src:/app/src
+      - /app/node_modules
+      - /app/dist
+    environment:
+      - DATABASE_URL=postgresql://postgres:root@db:5432/inventorymanagment?schema=public
+    depends_on:
+       db:
+        condition: service_healthy
+
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: inventorymanagment
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
