@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: inventory-backend
+    env: node
+    region: frankfurt  # or any free region
+    plan: free
+    buildCommand: cd server && npm install && npm run build
+    startCommand: node server/dist/index.js
+    envVars:
+      - key: DATABASE_URL
+        sync: false   # set in Render dashboard from Neon

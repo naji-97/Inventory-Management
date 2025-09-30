@@ -1,0 +1,6 @@
+docker-compose.dev.yml
+docker-compose.prod.yml
+client/Dockerfile
+client/Dockerfile.dev
+server/Dockerfile
+server/Dockerfile.dev

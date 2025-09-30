@@ -5,7 +5,8 @@ const prisma = new PrismaClient();
 
 export const getDashboardMetrics = async (
   req: Request,
-  res: Response
+  res: Response,
+  next: any
 ): Promise<void> => {
   try {
     const popularProducts = await prisma.products.findMany({
@@ -55,6 +56,8 @@ export const getDashboardMetrics = async (
       expenseByCategorySummary,
     });
   } catch (error) {
-    res.status(500).json({ message: "Error retrieving dashboard metrics" });
+    res.status(500).json({ message: "Error retrieving dashboard metrics", error });
+    next(error);
+
   }
 };

@@ -4,20 +4,22 @@ WORKDIR /app
 
 # Copy package files and install dependencies (including dev deps)
 COPY package*.json ./
-RUN npm install
+RUN npm install --legacy-peer-deps
 
-# Copy Prisma schema and generate client
-COPY prisma ./prisma
-RUN npx prisma generate
+# Global tools (optional, but helpful for dev)
+RUN npm install -g ts-node nodemon concurrently
 
-# Copy source code
+# Copy the rest of backend 
 COPY . .
 
-# Install nodemon for hot reloading
-RUN npm install -g nodemon
+# Copy Prisma schema and generate client
+# COPY prisma ./prisma
+RUN npx prisma generate
+
+
 
 # Expose port
 EXPOSE 4000
 
 # Start with nodemon for hot reloading
-CMD ["nodemon", "src/index.ts"]
+CMD ["npm", "run", "dev"]
