@@ -12,8 +12,8 @@ services:
     startCommand: |
       cd server &&
       npx prisma migrate deploy && 
-      npx ts-node prisma/seed.ts && 
-      node dist/src/index.js
+      npm run db:seed && 
+      npm start
     envVars:
       - key: DATABASE_URL
         sync: false
