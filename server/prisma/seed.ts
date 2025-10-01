@@ -23,6 +23,7 @@ async function deleteAllData(orderedFileNames: string[]) {
 }
 
 async function main() {
+  console.log("🌱 Starting database seeding...");
   const dataDirectory = path.join(__dirname, "seedData");
 
   const orderedFileNames = [
